@@ -19,6 +19,10 @@
 
 ---
 
+What to expect?
+
+The goals of this workshop is not to create a fully working API, API Design takes time and practice, the purpose of this workshop is to provide you a mental framework that you can use, refine, modify, make your own to work through the process of designing APIs for applications. At the end of our three hours, you will know the steps I take when working through the design process of application development, and I believe it will provide you a good starter guide to building applications.
+
 ## About
 
 What will I learn from this workshop?
@@ -285,8 +289,65 @@ the connected business rules from api endpoint to a mocked backend.
 
 ## Securing the API
 
+It is all about SCOPES and JWTs. A JWT is a signed token that contains data that you can trust, part of that data is 
+the scopes property. These scopes describe the capabilities granted for this requestor against this API.
+
 ## README
+
+The README file is the first file a developer consuming your API will check out, it also is valuable for developers that may wish to contribute to improve your API. All README files should be the landing point for developers looking for help and developers looking to contribute, it is important to properly separate these developer types and communicate appropriately to each.
+
+### Exercise
+
+* Take a moment and lookup an example of a well defined README from a developer consumer standpoint
+* Take a moment and lookup an example of a well defined README from a developer contributor standpoint
+
+### My current README Template
+
+``` markdown
+<h1 align="center">Project Title</h1>
+<p align="center">Description</p>
+<div align="center">Any badges</div>
+
+---
+
+## Table of contents
+
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Documentation](#documentation)
+- [Testing](#testing)
+- [Code of Conduct](#code-of-conduct)
+- [Contribution](#contribution)
+- [License](#license)
+
+---
+
+```
 
 ## CI/CD
 
+Continuous Integration and Continuous Delivery are two very important aspects of API design and development, my recommendation and practice is to have your integration strategy and delivery pipeline completed first, before you write too much code. Having these components to your development process will give you a fast feedback loop out of the gate. If you are not practicing CI/CD it is not too late to start.
+
+### Trunk based development
+
+### Automated deployment
+
+### Resources
+
+* Continuous Delivery Youtube channel
+* Trunk based development website
+* ...
+
+### Discussion
+
+* When you hear trunk based development, what fears prompt you to push back?
+* Questions? How do you change from feature branch to trunk based?
+
+## Frictionless Development (misc)
+
+When onboarding team members to a project it can be a bit of a challenge to get them up to speed, often times I have seen new developers struggle to get the development environment configured for contribution, this starts a new team member on the wrong foot. Taking the time to create a frictionless onboarding process can keep integration loops short and ramping up new developers immediate, they are able to run dev environments on day one.
+
+> Consider cloud-based development with tools like gitpod.io to create frictionless development experiences.
+
 ## Summary
+
