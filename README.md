@@ -351,3 +351,12 @@ When onboarding team members to a project it can be a bit of a challenge to get 
 
 ## Summary
 
+Some takeaways:
+
+1. separate your business logic from your services
+   don't marry your business rules to services like databases that may affect the future of your application.
+1. consider the strategy of design based on your problem statement, make sure you and your team fully understands the problem you are trying to solve
+1. sketch simple mockups of your ux if it helps identify and separate features in your application
+1. APIs should describe features or be capable to combine to create features
+1. Don't worry about being to specific when designing APIs for the presentation layer, general API should be designed for business logic
+1. Don't worry about getting it right on the first go, create artifacts that are easy to modify over time.
