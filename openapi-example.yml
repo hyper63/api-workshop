@@ -4,9 +4,9 @@ info:
   description: >
     Build a movie review app
   contact:
-    url: https://hyper.io/contact
-    email: info@hyper.io
-    name: hyper
+    url: https://moviereview.io/contact
+    email: info@moviereview.io
+    name: moviereview
   license:
     name: Apache Licnense 2.0
   version: "1.0"
@@ -14,7 +14,7 @@ servers:
   - description: Development Server
     url: http://localhost:3000
   - description: Production Server
-    url: https://movies.hyper.io
+    url: https://moviereview.io
 paths:
   /:
     get: 
