@@ -14,7 +14,7 @@
 - [Integration Tests](#integration-tests)
 - [Securing the API](#securing-the-api)
 - [README](#readme)
-- [CI/CD](#ci/cd)
+- [CI/CD](#cicd)
 - [Summary](#summary)
 
 ---
@@ -576,6 +576,53 @@ Review exercise
 
 Continuous Integration and Continuous Delivery are two very important aspects of API design and development, my recommendation and practice is to have your integration strategy and delivery pipeline completed first, before you write too much code. Having these components to your development process will give you a fast feedback loop out of the gate. If you are not practicing CI/CD it is not too late to start.
 
+### Continuous Integration
+
+1. Setup your test step via cli, eg. `npm test` or `yarn test`, within that test script, include everything you want to check during the build, linting, formatting, testing.
+
+For NodeJS, you may choose, [eslint](#), [prettier](#), and [tape](#)
+For Deno, you may choose, `deno lint`, `deno fmt`, and `deno test`
+
+``` json
+{
+  ...
+  "scripts": {
+    "lint": "eslint",
+    "format": "prettier",
+    "tape": "tape tests",
+    "test": "run-s lint format tape"
+  }
+}
+```
+
+2. Setup you continuous integration process to run your cli test command:
+
+`.github/workflows/testing.yml`
+
+``` yaml
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          node-version: [14.x]
+      steps:
+        - uses: actions/checkout@v2
+        - name: Use NodeJS ${{ matrix.node-version }}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{ matrix.node-version }}
+        - run: npm install
+        - run: npm test
+          env:
+            CI: true
+
+```
+
 ### Trunk based development
 
 We had a sizable debate about trunk based development, it sparked all kinds of reactions:
@@ -588,7 +635,7 @@ We had a sizable debate about trunk based development, it sparked all kinds of r
 
 This is a discussion you should hash out with your team, but it has been proven that trunk based development is a very good thing and results in very high performing teams. If you took the DORA Check list, https://www.devops-research.com/quickcheck.html this list highlights the four effective measures of a high performing team.
 
-Principals
+Principles/Values
 
 * Trunk should always be deployable
 * Trunk tests should always pass
@@ -608,6 +655,56 @@ What are short lived pull requests?
 
 ### Automated deployment
 
+When a commit occurs on the trunk branch of the repository, it should be setup to deploy to production, either by CI triggering your automated deploy step or by your deployment system listening to a webhook from your git repository. Github Actions is a great way to trigger continuous deployment.
+
+[Architect](https://arc.codes)
+
+``` json
+{
+  ...
+  "scripts": {
+    ...
+    "deploy": "arc --production deploy" 
+  }
+}
+```
+
+[Fly.io](https://fly.io)
+
+``` json
+{
+  ...
+  "scripts": {
+    ...
+    "deploy": "flyctl deploy" 
+  }
+}
+```
+
+``` yaml
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          node-version: [14.x]
+      steps:
+        - uses: actions/checkout@v2
+        - name: Use NodeJS ${{ matrix.node-version }}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{ matrix.node-version }}
+        - run: npm install
+        - run: npm deploy
+          env:
+            CI: true
+
+```
 
 ### Resources
 
