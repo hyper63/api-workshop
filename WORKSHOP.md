@@ -155,6 +155,9 @@ Pick one feature and write a user story with at least one scenario using the use
 
 Write the API calls required to satisfy the `THEN` section of the scenario.
 
+Review exercises
+
+
 ---
 
 ## OpenAPI Editor
@@ -289,6 +292,8 @@ API -> DataSource: return {ok: true, reviews: [{type: movie, ...} ...]}
 
 Use the web sequence diagram tool to document the api endpoint processes for your feature.
 
+Review exercise
+
 ---
 
 ## Data Validation
@@ -314,6 +319,8 @@ export default validateMovie(movie) {
 
 Create a zod schema for one of the models used in your feature:
 For documentation help on zod check out: https://github.com/colinhacks/zod
+
+Review exercise
 
 ---
 
@@ -351,6 +358,8 @@ test('GET /movies/{id}', t => {
 ### Exercise 1
 
 In the `tests` folder create a new test file using the following pattern `[verb]-[resource]_test.js` for your api endpoint. And using `tape` and `supertest` write a simple test for your endpoint.
+
+Review exercise
 
 ---
 
@@ -428,6 +437,9 @@ export default function (scope) {
 
 Define a scope for your endpoint and create a scope check middleware to verify that only a request with scope you provided is able to successfully access your endpoint.
 
+Review exercise
+
+
 ---
 
 ## README
@@ -460,7 +472,103 @@ The README file is the first file a developer consuming your API will check out,
 
 ---
 
+## Getting Started
+
+## Usage
+
+## Documentation
+
+## Testing
+
+## Code of Conduct
+
+## Contribution
+
+## License
+
+
+
 ```
+
+### Commented Template
+
+``` markdown
+<h1 align="center">Project Title</h1>
+<p align="center">
+  Description: A short description of the project, make sure you know your target audience,
+  in most cases, you have two target audiences
+  <ul>
+    <li>Developers that will be using your API project</li>
+    <li>Developers that will be contributing to your API project</li>
+  </ul>
+</p>
+<div align="center">Any badges: place any badges relevent to your target audience, the latest release version, if tests are passing or not, etc.</div>
+
+---
+
+## Table of contents
+
+> You table of contents should contain quick links to sections of the document that a reader would be interested in and able to reference quickly, below are some common links, but your use case may vary
+
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Documentation](#documentation)
+- [Testing](#testing)
+- [Code of Conduct](#code-of-conduct)
+- [Contribution](#contribution)
+- [License](#license)
+
+---
+
+## Getting Started
+
+The quicker you can get your users and contributors able to use your project the better, a getting started section
+should do just that, explain how to install your project from an users point of view and how to get started with contributing or link to the contributing section with developer setup. Using tools like gitpod.io or github code spaces can drastically increase the time for contribution and can be a real game changer on frictionless contributions. You also need to know your audience and maybe add disclaimer or link to get help if they are stuggling with the getting started guide.
+
+## Usage
+
+Examples on how to use your API and including best practices are great sections to include in your readme, many people do not read passed the read when using your software so creating clear usage examples helps, again with a link to a support mechanism. You may want to consider providing examples based on use case descriptions to give the user relevant relationships that they can use to apply to their use case. If your project is large, maybe consider linking to a much richer usage guide whether inside the project or an external documentation site.
+
+## Documentation
+
+Documentation can be a lengthy subject that includes so many sub topics:
+
+* About the project
+* Getting Started
+* Architecture
+* Use Case Examples
+* Reference
+* Contribution
+* FAQ
+* Support
+
+Etc, I am sure you can think of much more, if the documentation requires more than a few pages of content, I would highly consider providing a couple of paragraphs here and link to a documentation site. I consider readme's great for a TL;DR; but if you want to get into the details, the better experience is a documenation site.
+
+## Testing
+
+With CI/CD this may not be as important as it once was, but I think you should always provide information on how to run the test suite as a contributing developer in a command-line markdown block. Why? Tests can give contributors confidence the code they are changing is not breaking other parts of the application, and should not have to wait until the CI/CD is run to find that out, making it easy for the contributor to figure out how to test will reduce the boundary of contribution. Also users of the project may want to launch into a workspace and run tests, just to verify the system is working. gitpod.io is a great tool to consider for this use case.
+
+## Code of Conduct
+
+Consider using a COC generator - https://miloslav.website/code-of-conduct/ or search for guides on how to create 
+a code of conduct, put it in your repository and link to it in your README. We should always be clear of the rules of conduct for any project that includes more than one person.
+
+## Contribution
+
+Determine if you need to create a contribution guide or if you can define you contribution rules with in the readme itself. Depending on the complexity of the project you may be able to define contribution rules in a couple of lines. Taking the time to be clear on contribution processes is a great way to keep submissions clean and concise and reduce conflicting discussions.
+
+## License
+
+If you plan to open source your project display the open source license you intend to use, if it is closed source, I usally just add an `All rights reserved` link with the company name. If you plan to place your source code under a proprietary license, work with your legal team to make sure you are applying the correct disclaimer and license information to your code base.
+
+
+```
+
+Exercise 1
+
+Take 5 minutes to write a README for this project only focusing on the details you have implemented so far, try to right a few lines for each section in the readme, or determine if you would place a link or details in the section. Add sections you think are missing, remove sections you think are not needed.
+
+Review exercise
 
 ---
 
@@ -470,7 +578,36 @@ Continuous Integration and Continuous Delivery are two very important aspects of
 
 ### Trunk based development
 
+We had a sizable debate about trunk based development, it sparked all kinds of reactions:
+
+* What do you mean we can commit directly to the trunk? 
+* What about code reviews?
+* What about automated testing and Pull Request workflow?
+* What if the feature is not complete?
+* etc
+
+This is a discussion you should hash out with your team, but it has been proven that trunk based development is a very good thing and results in very high performing teams. If you took the DORA Check list, https://www.devops-research.com/quickcheck.html this list highlights the four effective measures of a high performing team.
+
+Principals
+
+* Trunk should always be deployable
+* Trunk tests should always pass
+* Releases and deployments are separate
+
+Here is some of the guidelines we arrived at for our trunk based development approach:
+
+* Pair/Mob programming can commit to trunk
+* Use feature flags or branch by abstraction to keep trunk production ready
+* Sychronous code reviews are able to commit to trunk
+* Asynchronous single developer programming should leverage short-lived pull requests with code reviews happening within an hour (during business hours)
+
+What is pairing/mobbing? 
+What are feature flags?
+What are code reviews?
+What are short lived pull requests?
+
 ### Automated deployment
+
 
 ### Resources
 
