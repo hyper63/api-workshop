@@ -27,11 +27,17 @@ The goals of this workshop is not to create a fully working API, API Design take
 
 What will I learn from this workshop?
 
-* How to design apps with an API First mindset?
+* Some design concepts and tools to apply to APIs
 * How to draw your api workflows for group sharing and feedback sessions?
 * How to leverage REST documentation tools to identify holes in your design quickly?
 * How to approach testing and continuous integration?
 * Building a solid README for your future self and team 
+
+What this workshop is not about?
+
+* The Product Management process
+* Agile development team processes
+* A silver bullet to high performance
 
 ## Prerequisites
 
@@ -43,14 +49,34 @@ What should I know, to get the most out of this workshop?
 * NodeJS
 * ExpressJS
 
-## What is an API?
+---
+
+## Getting Started
+
+### What is an API?
 
 When you think about it, an API is a way to black box functionality so that the consumer can invoke that 
 functionality in a declarative way, at least one level up from the previous level of abstraction. This allows the development team that will be consuming the API to focus at satisfying user features at a higher and more efficient level. 
 
----
+### 4 essential characteristics of successful APIs
 
-## Thinking about application design and architecture
+* Security
+* Documentation
+* Validation
+* Testing
+
+https://opensource.com/article/21/5/successful-apis
+
+* _Automation_
+
+https://www.devops-research.com/research.html
+
+> DORA Quick Check
+
+https://www.devops-research.com/quickcheck.html
+
+
+### Thinking about application design and architecture
 
 Understanding the functional requirements of any application is a must in order to design and architect your application. The functional requirements will help shape the domains of your application and give you an idea on how to organize your API. There are several approaches to start to design an application.
 
@@ -320,6 +346,13 @@ test('GET /movies/{id}', t => {
 })
 ```
 
+> Writing tests should be easy, you do need to know a couple of things, but tests should not be seen as a productivity killer, this is a myth, there is no excuse not to test code, especially business logic. The more business logic you can place within your API boundary, the easier it is to test and the higher the quality of the implementation.
+
+### Exercise 1
+
+In the `tests` folder create a new test file using the following pattern `[verb]-[resource]_test.js` for your api endpoint. And using `tape` and `supertest` write a simple test for your endpoint.
+
+---
 
 ## Securing the API
 
@@ -329,6 +362,24 @@ the scopes property. These scopes describe the capabilities granted for this req
 ### What are SCOPES? 
 
 Scopes are a way to define permissions based on functionality that can be attached to a role or user profile. This allows you to separate AuthN, AuthZ and Access Control. In other words, by leveraging SCOPES, you API can remained loosely coupled from your AuthN/AuthZ strategies. A common pattern for scopes is RESOURCE:ACTION with the ability to add '\*' for the RESOURCE and ACTION indicating 'all'. For example, if the JWT contains a scope property with the value '\*:\*' then that request should have access to all resouces and all actions. By defining scopes, we enable our APIs to restrict usage based on a specific scope. For the endpoint /movies/{id} we might define the scope as 'MOVIE:READ', and in our implementation, we will want to verify request using a check for this scope. Before we can check scope we need a way to include the scope in the request in a secure way. This is where JWTs come in to play.
+
+SCOPES
+
+* MOVIES:READ - Search/List/Read Movie resource
+* REVIEWS:READ - ListByMovie/Read Review resource
+* REVIEWS:WRITE - Create/Update/Delete Review resource
+* REACTIONS:READ - ListByReview/Read Reaction resource
+* REACTIONS:WRITE - Create/Delete Reaction resource
+
+ROLES
+
+* REVIEWER - REVIEWS:WRITE
+* USER - MOVIES:READ, REVIEWS:READ, REACTIONS:READ, REACTIONS:WRITE
+
+USER
+
+* FRED - ROLES: REVIEWER, USER
+* JANE - ROLES: USER
 
 ### What is a JWT?
 
@@ -341,6 +392,37 @@ Lets take a look at https://jwt.io
 ### How are we going to implement a check for JWT and SCOPES?
 
 We will use middleware, middleware is a common REST API pattern that allows us to add some logic or checks in front of several endpoints. Using the `express-jwt` middleware, we will validate the JWT and set the payload to the `req.user` prop. Then we will build a scope check middleware.
+
+https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkZSRUQiLCJpYXQiOjE1MTYyMzkwMjIsInNjb3BlIjoiTU9WSUVTOlJFQUQgUkVWSUVXUzpSRUFEIFJFQUNUSU9OUzpSRUFEIFJFVklFV1M6V1JJVEUgUkVBQ1RJT05TOldSSVRFIn0.JW-Opp57_ZC_v27_BoCVaEsTPP2ZBbUlfVOL2dr9QUg
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkZSRUQiLCJpYXQiOjE1MTYyMzkwMjIsInNjb3BlIjoiTU9WSUVTOlJFQUQgUkVWSUVXUzpSRUFEIFJFQUNUSU9OUzpSRUFEIFJFVklFV1M6V1JJVEUgUkVBQ1RJT05TOldSSVRFIn0.JW-Opp57_ZC_v27_BoCVaEsTPP2ZBbUlfVOL2dr9QUg
+```
+
+``` js
+import jwt from 'express-jwt'
+
+const protect = jwt({
+  secret: 'secret',
+  algorithms: ['HS256']
+})
+
+app.get('/movies/:id', protect, handleRoute)
+
+```
+
+Check Scope Middleware
+
+``` js
+export default function (scope) {
+  return function (req, res, next) {
+    if (req.user.scope.split(' ').includes(SCOPE)) {
+      return next()
+    }
+    res.status(401).send({ok: false, msg: 'Not Authorized, invalid permissions'})
+  }
+}
+```
 
 ### Exercise 1
 
