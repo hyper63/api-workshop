@@ -53,6 +53,12 @@ What should I know, to get the most out of this workshop?
 
 ## Getting Started
 
+> Fork: https://github.com/hyper63/api-workshop
+
+Then open in gitpod
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
+
 ### What is an API?
 
 When you think about it, an API is a way to black box functionality so that the consumer can invoke that 
@@ -67,13 +73,11 @@ functionality in a declarative way, at least one level up from the previous leve
 
 https://opensource.com/article/21/5/successful-apis
 
-* _Automation_
-
-https://www.devops-research.com/research.html
-
-> DORA Quick Check
-
-https://www.devops-research.com/quickcheck.html
+* _Observability/Monitoring_
+    - Requests Per Second
+    - Errors Per Second
+    - Latency by Endpoint (90th/95th)
+    
 
 
 ### Thinking about application design and architecture
@@ -101,7 +105,10 @@ Prior Art:
 
 Description (hypothesis):
 
-if it was easy for everyone to review movies and everyone could react to those reviews, we could use the reviewers characteristic data and the reactions of the review to create an accurate and valuable review that provides relevant information to the user looking to watch a movie.
+if it was easy for everyone to review movies and everyone could react to those 
+reviews, we could use the reviewers characteristic data and the reactions of 
+the review to create an accurate and valuable review that provides relevant 
+information to the user looking to watch a movie.
 
 ```
 
@@ -157,7 +164,54 @@ Write the API calls required to satisfy the `THEN` section of the scenario.
 
 Review exercises
 
-> TIP: Here is a great video on User Stories, https://youtu.be/0HMsh459h5c
+> FYI: Here is a great video on User Stories, https://youtu.be/0HMsh459h5c
+
+---
+
+## Sequence Diagrams
+
+For complicated interactions or team discussions, it is good to draw sequence diagrams to have technology discussions on approaches for specific APIs
+
+* https://www.websequencediagrams.com/
+
+![Example](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgVW4AAwVkCgpBbGljZS0-Qm9iOiBBdXRoZW50aWNhdGlvbiBSZXF1ZXN0Cm5vdGUgcmlnaHQgb2YgACUFQm9iIHRoaW5rcyBhYm91dCBpdApCb2ItPgBKBQA3E3Nwb25zZQo&s=default)
+
+> Using a simple markup language, I can draw out a diagram that represents a clean view of the process of the required feature.
+
+```
+title Untitled
+
+Alice->Bob: Authentication Request
+note right of Bob: Bob thinks about it
+Bob->Alice: Authentication Response
+```
+
+### Demo
+
+Lets walk through creating a sequence diagram for the view movie and reviews page:
+
+```
+title view movie and reviews
+
+Client -> API: GET /api/movies/{id}
+API -> DataSource: Get Movie JSON
+DataSource -> API: return { type: 'movie', ...}
+API -> Client: return { type: 'movie', ... }
+
+Client -> API: GET /api/movies/{id}/reviews
+API -> DataSource: Get Reviews by Movie ID
+DataSource -> API: return [{type: movie, ...}, ...]
+API -> DataSource: return {ok: true, reviews: [{type: movie, ...} ...]}
+
+```
+
+![Diagram](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgdmlldyBtb3ZpZSBhbmQgcmV2aWV3cwoKQ2xpZW50IC0-IEFQSTogR0VUIC9hcGkvACYFcy97aWR9CkFQSSAtPiBEYXRhU291cmNlOiBHZXQgTQBJBUpTT04KABEKAEEJcmV0dXJuIHsgdHlwZTogJwB3BScsIC4uLgBJCQB3BgAPHSB9AIB_JS8AgUkIAIEVF1IAgWoGIGJ5AIEwB0lEAIEaG1t7AIEvBgCCKwUAgS0GAIE0BV0AgXcUAIFhCG9rOiB0cnVlLACCVQg6ADQUAEIFfQo&s=default)
+
+### Exercise 1
+
+Use the web sequence diagram tool to document the api endpoint processes for your feature.
+
+Review exercise
 
 ---
 
@@ -248,52 +302,7 @@ components:
             - romance
 ```
 
----
-
-## Sequence Diagrams
-
-For complicated interactions or team discussions, it is good to draw sequence diagrams to have technology discussions on approaches for specific APIs
-
-* https://www.websequencediagrams.com/
-
-![Example](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgVW4AAwVkCgpBbGljZS0-Qm9iOiBBdXRoZW50aWNhdGlvbiBSZXF1ZXN0Cm5vdGUgcmlnaHQgb2YgACUFQm9iIHRoaW5rcyBhYm91dCBpdApCb2ItPgBKBQA3E3Nwb25zZQo&s=default)
-
-> Using a simple markup language, I can draw out a diagram that represents a clean view of the process of the required feature.
-
-```
-title Untitled
-
-Alice->Bob: Authentication Request
-note right of Bob: Bob thinks about it
-Bob->Alice: Authentication Response
-```
-
-### Demo
-
-Lets walk through creating a sequence diagram for the view movie and reviews page:
-
-```
-title view movie and reviews
-
-Client -> API: GET /api/movies/{id}
-API -> DataSource: Get Movie JSON
-DataSource -> API: return { type: 'movie', ...}
-API -> Client: return { type: 'movie', ... }
-
-Client -> API: GET /api/movies/{id}/reviews
-API -> DataSource: Get Reviews by Movie ID
-DataSource -> API: return [{type: movie, ...}, ...]
-API -> DataSource: return {ok: true, reviews: [{type: movie, ...} ...]}
-
-```
-
-![Diagram](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgdmlldyBtb3ZpZSBhbmQgcmV2aWV3cwoKQ2xpZW50IC0-IEFQSTogR0VUIC9hcGkvACYFcy97aWR9CkFQSSAtPiBEYXRhU291cmNlOiBHZXQgTQBJBUpTT04KABEKAEEJcmV0dXJuIHsgdHlwZTogJwB3BScsIC4uLgBJCQB3BgAPHSB9AIB_JS8AgUkIAIEVF1IAgWoGIGJ5AIEwB0lEAIEaG1t7AIEvBgCCKwUAgS0GAIE0BV0AgXcUAIFhCG9rOiB0cnVlLACCVQg6ADQUAEIFfQo&s=default)
-
-### Exercise 1
-
-Use the web sequence diagram tool to document the api endpoint processes for your feature.
-
-Review exercise
+> OpenAPI Design Tools: Check out Insomnia - https://insomnia.rest/
 
 ---
 
@@ -403,10 +412,16 @@ Lets take a look at https://jwt.io
 
 We will use middleware, middleware is a common REST API pattern that allows us to add some logic or checks in front of several endpoints. Using the `express-jwt` middleware, we will validate the JWT and set the payload to the `req.user` prop. Then we will build a scope check middleware.
 
-https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkZSRUQiLCJpYXQiOjE1MTYyMzkwMjIsInNjb3BlIjoiTU9WSUVTOlJFQUQgUkVWSUVXUzpSRUFEIFJFQUNUSU9OUzpSRUFEIFJFVklFV1M6V1JJVEUgUkVBQ1RJT05TOldSSVRFIn0.JW-Opp57_ZC_v27_BoCVaEsTPP2ZBbUlfVOL2dr9QUg
+[jwt.io](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkZSRUQiLCJpYXQiOjE1MTYyMzkwMjIsInNjb3BlIjoiTU9WSUVTOlJFQUQgUkVWSUVXUzpSRUFEIFJFQUNUSU9OUzpSRUFEIFJFVklFV1M6V1JJVEUgUkVBQ1RJT05TOldSSVRFIn0.JW-Opp57_ZC_v27_BoCVaEsTPP2ZBbUlfVOL2dr9QUg)
 
 ```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkZSRUQiLCJpYXQiOjE1MTYyMzkwMjIsInNjb3BlIjoiTU9WSUVTOlJFQUQgUkVWSUVXUzpSRUFEIFJFQUNUSU9OUzpSRUFEIFJFVklFV1M6V1JJVEUgUkVBQ1RJT05TOldSSVRFIn0.JW-Opp57_ZC_v27_BoCVaEsTPP2ZBbUlfVOL2dr9QUg
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+.
+eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkZSRUQiLCJpYXQiOjE1MT
+YyMzkwMjIsInNjb3BlIjoiTU9WSUVTOlJFQUQgUkVWSUVXUzpSRUFEIFJF
+QUNUSU9OUzpSRUFEIFJFVklFV1M6V1JJVEUgUkVBQ1RJT05TOldSSVRFIn0
+.
+JW-Opp57_ZC_v27_BoCVaEsTPP2ZBbUlfVOL2dr9QUg
 ```
 
 ``` js
@@ -496,20 +511,26 @@ The README file is the first file a developer consuming your API will check out,
 ``` markdown
 <h1 align="center">Project Title</h1>
 <p align="center">
-  Description: A short description of the project, make sure you know your target audience,
-  in most cases, you have two target audiences
+  Description: A short description of the project, make sure 
+  you know your target audience, in most cases, you have two 
+  target audiences
   <ul>
     <li>Developers that will be using your API project</li>
     <li>Developers that will be contributing to your API project</li>
   </ul>
 </p>
-<div align="center">Any badges: place any badges relevent to your target audience, the latest release version, if tests are passing or not, etc.</div>
+<div align="center">Any badges: place any badges relevent to 
+your target audience, the latest release version, if tests 
+are passing or not, etc.</div>
 
 ---
 
 ## Table of contents
 
-> You table of contents should contain quick links to sections of the document that a reader would be interested in and able to reference quickly, below are some common links, but your use case may vary
+> You table of contents should contain quick links to sections of 
+> the document that a reader would be interested in and able to 
+> reference quickly, below are some common links, but your use 
+> case may vary
 
 - [Getting Started](#getting-started)
 - [Usage](#usage)
@@ -523,12 +544,26 @@ The README file is the first file a developer consuming your API will check out,
 
 ## Getting Started
 
-The quicker you can get your users and contributors able to use your project the better, a getting started section
-should do just that, explain how to install your project from an users point of view and how to get started with contributing or link to the contributing section with developer setup. Using tools like gitpod.io or github code spaces can drastically increase the time for contribution and can be a real game changer on frictionless contributions. You also need to know your audience and maybe add disclaimer or link to get help if they are stuggling with the getting started guide.
+The quicker you can get your users and contributors able to use your 
+project the better, a getting started section should do just that, 
+explain how to install your project from an users point of view and 
+how to get started with contributing or link to the contributing 
+section with developer setup. Using tools like gitpod.io or github 
+code spaces can drastically increase the time for contribution and 
+can be a real game changer on frictionless contributions. You also 
+need to know your audience and maybe add disclaimer or link to get 
+help if they are stuggling with the getting started guide.
 
 ## Usage
 
-Examples on how to use your API and including best practices are great sections to include in your readme, many people do not read passed the read when using your software so creating clear usage examples helps, again with a link to a support mechanism. You may want to consider providing examples based on use case descriptions to give the user relevant relationships that they can use to apply to their use case. If your project is large, maybe consider linking to a much richer usage guide whether inside the project or an external documentation site.
+Examples on how to use your API and including best practices are great 
+sections to include in your readme, many people do not read passed the 
+read when using your software so creating clear usage examples helps, 
+again with a link to a support mechanism. You may want to consider 
+providing examples based on use case descriptions to give the user 
+relevant relationships that they can use to apply to their use case. 
+If your project is large, maybe consider linking to a much richer 
+usage guide whether inside the project or an external documentation site.
 
 ## Documentation
 
@@ -543,31 +578,58 @@ Documentation can be a lengthy subject that includes so many sub topics:
 * FAQ
 * Support
 
-Etc, I am sure you can think of much more, if the documentation requires more than a few pages of content, I would highly consider providing a couple of paragraphs here and link to a documentation site. I consider readme's great for a TL;DR; but if you want to get into the details, the better experience is a documenation site.
+Etc, I am sure you can think of much more, if the documentation requires 
+more than a few pages of content, I would highly consider providing a 
+couple of paragraphs here and link to a documentation site. I consider 
+readme's great for a TL;DR; but if you want to get into the details, the 
+better experience is a documenation site.
 
 ## Testing
 
-With CI/CD this may not be as important as it once was, but I think you should always provide information on how to run the test suite as a contributing developer in a command-line markdown block. Why? Tests can give contributors confidence the code they are changing is not breaking other parts of the application, and should not have to wait until the CI/CD is run to find that out, making it easy for the contributor to figure out how to test will reduce the boundary of contribution. Also users of the project may want to launch into a workspace and run tests, just to verify the system is working. gitpod.io is a great tool to consider for this use case.
+With CI/CD this may not be as important as it once was, but I think you 
+should always provide information on how to run the test suite as a 
+contributing developer in a command-line markdown block. Why? Tests can 
+give contributors confidence the code they are changing is not breaking 
+other parts of the application, and should not have to wait until the 
+CI/CD is run to find that out, making it easy for the contributor to 
+figure out how to test will reduce the boundary of contribution. Also users 
+of the project may want to launch into a workspace and run tests, just 
+to verify the system is working. gitpod.io is a great tool to consider 
+for this use case.
 
 ## Code of Conduct
 
-Consider using a COC generator - https://miloslav.website/code-of-conduct/ or search for guides on how to create 
-a code of conduct, put it in your repository and link to it in your README. We should always be clear of the rules of conduct for any project that includes more than one person.
+Consider using a COC generator - https://miloslav.website/code-of-conduct/ 
+or search for guides on how to create a code of conduct, put it in your 
+repository and link to it in your README. We should always be clear of the 
+rules of conduct for any project that includes more than one person.
 
 ## Contribution
 
-Determine if you need to create a contribution guide or if you can define you contribution rules with in the readme itself. Depending on the complexity of the project you may be able to define contribution rules in a couple of lines. Taking the time to be clear on contribution processes is a great way to keep submissions clean and concise and reduce conflicting discussions.
+Determine if you need to create a contribution guide or if you can define 
+you contribution rules with in the readme itself. Depending on the complexity 
+of the project you may be able to define contribution rules in a couple of 
+lines. Taking the time to be clear on contribution processes is a great way 
+to keep submissions clean and concise and reduce conflicting discussions.
 
 ## License
 
-If you plan to open source your project display the open source license you intend to use, if it is closed source, I usally just add an `All rights reserved` link with the company name. If you plan to place your source code under a proprietary license, work with your legal team to make sure you are applying the correct disclaimer and license information to your code base.
+If you plan to open source your project display the open source license you 
+intend to use, if it is closed source, I usally just add an 
+`All rights reserved` link with the company name. If you plan to place your 
+source code under a proprietary license, work with your legal team to make 
+sure you are applying the correct disclaimer and license information to 
+your code base.
 
 
 ```
 
 Exercise 1
 
-Take 5 minutes to write a README for this project only focusing on the details you have implemented so far, try to right a few lines for each section in the readme, or determine if you would place a link or details in the section. Add sections you think are missing, remove sections you think are not needed.
+Take 5 minutes to write a README for this project only focusing on the details 
+you have implemented so far, try to right a few lines for each section in the 
+readme, or determine if you would place a link or details in the section. 
+Add sections you think are missing, remove sections you think are not needed.
 
 Review exercise
 
@@ -575,11 +637,18 @@ Review exercise
 
 ## CI/CD
 
-Continuous Integration and Continuous Delivery are two very important aspects of API design and development, my recommendation and practice is to have your integration strategy and delivery pipeline completed first, before you write too much code. Having these components to your development process will give you a fast feedback loop out of the gate. If you are not practicing CI/CD it is not too late to start.
+Continuous Integration and Continuous Delivery are two very important aspects 
+of API design and development, my recommendation and practice is to have your 
+integration strategy and delivery pipeline completed first, before you write 
+too much code. Having these components to your development process will give 
+you a fast feedback loop out of the gate. If you are not practicing CI/CD it 
+is not too late to start.
 
 ### Continuous Integration
 
-1. Setup your test step via cli, eg. `npm test` or `yarn test`, within that test script, include everything you want to check during the build, linting, formatting, testing.
+1. Setup your test step via cli, eg. `npm test` or `yarn test`, within that 
+  test script, include everything you want to check during the build, linting, 
+  formatting, testing.
 
 For NodeJS, you may choose, [eslint](#), [prettier](#), and [tape](#)
 For Deno, you may choose, `deno lint`, `deno fmt`, and `deno test`
@@ -634,7 +703,10 @@ We had a sizable debate about trunk based development, it sparked all kinds of r
 * What if the feature is not complete?
 * etc
 
-This is a discussion you should hash out with your team, but it has been proven that trunk based development is a very good thing and results in very high performing teams. If you took the DORA Check list, https://www.devops-research.com/quickcheck.html this list highlights the four effective measures of a high performing team.
+This is a discussion you should hash out with your team, but it has been proven that trunk 
+based development is a very good thing and results in very high performing teams. If you 
+took the DORA Check list, https://www.devops-research.com/quickcheck.html this list highlights 
+the four effective measures of a high performing team.
 
 Principles/Values
 
@@ -647,7 +719,8 @@ Here is some of the guidelines we arrived at for our trunk based development app
 * Pair/Mob programming can commit to trunk
 * Use feature flags or branch by abstraction to keep trunk production ready
 * Sychronous code reviews are able to commit to trunk
-* Asynchronous single developer programming should leverage short-lived pull requests with code reviews happening within an hour (during business hours)
+* Asynchronous single developer programming should leverage short-lived pull requests 
+  with code reviews happening within an hour (during business hours)
 
 What is pairing/mobbing? 
 What are feature flags?
@@ -656,7 +729,10 @@ What are short lived pull requests?
 
 ### Automated deployment
 
-When a commit occurs on the trunk branch of the repository, it should be setup to deploy to production, either by CI triggering your automated deploy step or by your deployment system listening to a webhook from your git repository. Github Actions is a great way to trigger continuous deployment.
+When a commit occurs on the trunk branch of the repository, it should be setup to 
+deploy to production, either by CI triggering your automated deploy step or by your 
+deployment system listening to a webhook from your git repository. Github Actions 
+is a great way to trigger continuous deployment.
 
 [Architect](https://arc.codes)
 
@@ -709,9 +785,12 @@ jobs:
 
 ### Resources
 
-* Continuous Delivery Youtube channel https://www.youtube.com/channel/UCCfqyGl3nq_V0bo64CjZh8g
-* Trunk based development website https://trunkbaseddevelopment.com/
-* DORA Research of Automation https://www.devops-research.com/research.html
+* Continuous Delivery Youtube channel 
+  https://www.youtube.com/channel/UCCfqyGl3nq_V0bo64CjZh8g
+* Trunk based development website 
+  https://trunkbaseddevelopment.com/
+* DORA Research of Automation 
+  https://www.devops-research.com/research.html
 
 ### Discussion
 
@@ -720,20 +799,32 @@ jobs:
 
 ---
 
-## Frictionless Development (misc)
-
-When onboarding team members to a project it can be a bit of a challenge to get them up to speed, often times I have seen new developers struggle to get the development environment configured for contribution, this starts a new team member on the wrong foot. Taking the time to create a frictionless onboarding process can keep integration loops short and ramping up new developers immediate, they are able to run dev environments on day one.
-
-> Consider cloud-based development with tools like gitpod.io to create frictionless development experiences.
-
 ## Summary
+
+In this workshop, we broke down the process to design an API into a set of steps
+that include functional and non-functional requirements that can be composed based
+on your teams processes. Other than defining the problem there is no prescribed 
+order of these steps, each step will test/validate the design for all aspects of
+required non-functional requirements.
 
 Some takeaways:
 
 1. separate your business logic from your services
-   don't marry your business rules to services like databases that may affect the future of your application.
-1. consider the strategy of design based on your problem statement, make sure you and your team fully understands the problem you are trying to solve
-1. sketch simple mockups of your ux if it helps identify and separate features in your application
+   don't marry your business rules to services like databases that may affect 
+   the future of your application.
+1. consider the strategy of design based on your problem statement, make sure 
+  you and your team fully understands the problem you are trying to solve
+1. sketch simple mockups of your ux if it helps identify and separate features 
+  in your application
 1. APIs should describe features or be capable to combine to create features
-1. Don't worry about being to specific when designing APIs for the presentation layer, general API should be designed for business logic
-1. Don't worry about getting it right on the first go, create artifacts that are easy to modify over time.
+1. Don't worry about being to specific when designing APIs for the presentation 
+  layer, general API should be designed for business logic
+1. Don't worry about getting it right on the first go, create artifacts that 
+  are easy to modify over time.
+
+## Thank you
+
+This workshop was delivered by Tom Wilson @twilson63 at hyper the key to a 
+scalable application is the API boundary to separate the presentation layers
+from the business rules. By implementing these steps from this workshop,
+development teams will be setup for success.
