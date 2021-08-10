@@ -157,6 +157,7 @@ Write the API calls required to satisfy the `THEN` section of the scenario.
 
 Review exercises
 
+> TIP: Here is a great video on User Stories, https://youtu.be/0HMsh459h5c
 
 ---
 
@@ -708,9 +709,9 @@ jobs:
 
 ### Resources
 
-* Continuous Delivery Youtube channel
-* Trunk based development website
-* ...
+* Continuous Delivery Youtube channel https://www.youtube.com/channel/UCCfqyGl3nq_V0bo64CjZh8g
+* Trunk based development website https://trunkbaseddevelopment.com/
+* DORA Research of Automation https://www.devops-research.com/research.html
 
 ### Discussion
 
@@ -718,7 +719,6 @@ jobs:
 * Questions? How do you change from feature branch to trunk based?
 
 ---
-
 
 ## Frictionless Development (misc)
 
