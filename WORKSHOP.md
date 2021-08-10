@@ -13,7 +13,7 @@
 - [Data Validation](#data-validation)
 - [Integration Tests](#integration-tests)
 - [Securing the API](#securing-the-api)
-- [README](#readme)
+- [README](#readme-document)
 - [CI/CD](#cicd)
 - [Summary](#summary)
 
@@ -443,7 +443,7 @@ Review exercise
 
 ---
 
-## README
+## README Document
 
 The README file is the first file a developer consuming your API will check out, it also is valuable for developers that may wish to contribute to improve your API. All README files should be the landing point for developers looking for help and developers looking to contribute, it is important to properly separate these developer types and communicate appropriately to each.
 
