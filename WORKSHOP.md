@@ -8,8 +8,8 @@
 - [About](#about)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
-- [OpenAPI Editor](#openapi-editor)
 - [Sequence Diagrams](#sequence-diagrams)
+- [OpenAPI Editor](#openapi-editor)
 - [Data Validation](#data-validation)
 - [Integration Tests](#integration-tests)
 - [Securing the API](#securing-the-api)
@@ -55,9 +55,7 @@ What should I know, to get the most out of this workshop?
 
 > Fork: https://github.com/hyper63/api-workshop
 
-Then open in gitpod
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
+Then open in gitpod using `https://gitpod.io/#your-github-url`
 
 ### What is an API?
 
